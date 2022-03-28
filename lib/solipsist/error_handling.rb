@@ -15,7 +15,7 @@ module Solipsist
     end
 
     def render_errors(errors, status: :unprocessable_entity)
-      render json: format_errors(errors), status:
+      render json: format_errors(errors), status: status
     end
   end
 end
