@@ -1,4 +1,4 @@
-![Tests](https://github.com/monade/solipsist/actions/workflows/test/badge.svg)
+![Tests](https://github.com/monade/solipsist/actions/workflows/test.yml/badge.svg)
 
 # Solipsist
 
