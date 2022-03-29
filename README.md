@@ -1,3 +1,5 @@
+![Tests](https://github.com/monade/solipsist/actions/workflows/test/badge.svg)
+
 # Solipsist
 
 A simplified way to write JSON APIs in Rails, taking use of Cancancan and ActiveModel::Serializers.

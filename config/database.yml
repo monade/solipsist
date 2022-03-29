@@ -7,4 +7,4 @@ default: &default
 
 development:
   <<: *default
-  database: my_development
+  database: ':memory:'

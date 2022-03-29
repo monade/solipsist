@@ -20,6 +20,9 @@ end
 I18n.enforce_available_locales = false
 RSpec::Expectations.configuration.warn_about_potential_false_positives = false
 
+Rails.application.config.eager_load = false
+Rails.application.config.active_record.legacy_connection_handling = false
+
 Dir[File.expand_path('../support/*.rb', __FILE__)].each { |f| require f }
 
 RSpec.configure do |config|
@@ -36,5 +39,3 @@ RSpec.configure do |config|
     end
   end
 end
-
-
