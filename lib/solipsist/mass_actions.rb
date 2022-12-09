@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 module Solipsist
+  # Module for mass actions methods
   module MassActions
     extend ActiveSupport::Concern
 
+    # Module for mass actions class methods
     module ClassMethods
+      # @param [Hash] options
+      # @option options [Boolean] :transaction
       def accept_mass_actions(options = {})
         options.assert_valid_keys(:transaction)
 
@@ -24,11 +28,14 @@ module Solipsist
       end
     end
 
-    protected
-
+    # rubocop:disable Metrics/ModuleLength
+    # Module for mass actions methods
     module Methods
+      # rubocop:enable Metrics/ModuleLength
       extend ActiveSupport::Concern
 
+      # @param [Object] model
+      # @param [Hash] options
       def _implicit_create_action(model, options)
         if model.respond_to?(:length)
           _implicit_mass_create_action(model, options)
@@ -37,6 +44,8 @@ module Solipsist
         end
       end
 
+      # @param [Object] model
+      # @param [Hash] options
       def _implicit_update_action(model, options)
         if model.respond_to?(:length)
           _implicit_mass_update_action(model, options)
@@ -45,6 +54,8 @@ module Solipsist
         end
       end
 
+      # @param [Object] model
+      # @param [Hash] options
       def _implicit_destroy_action(model, options)
         if model.respond_to?(:length)
           _implicit_mass_destroy_action(model, options)
@@ -122,6 +133,8 @@ module Solipsist
         self.class._mass_actions_options
       end
 
+      # @param [Enumerable<Object>] models
+      # @param [Hash] options
       def _implicit_mass_create_action(models, options)
         saved_models = models.filter(&:save)
         errored_models = models - saved_models
@@ -131,6 +144,8 @@ module Solipsist
         block_given? ? yield : _implicit_render(saved_models, options.merge(meta: errors))
       end
 
+      # @param [Enumerable<Object>] models
+      # @param [Hash] options
       def _implicit_mass_destroy_action(models, options)
         destroyed_models = models.filter(&:destroy)
         errored_models = models - destroyed_models
@@ -140,6 +155,8 @@ module Solipsist
         block_given? ? yield : _implicit_render(destroyed_models, options.merge(errors: errors))
       end
 
+      # @param [Enumerable<Object>] models
+      # @param [Hash] options
       def _implicit_mass_update_action(models, options)
         update_params.each_with_index do |params, i|
           models[i]&.assign_attributes(params.to_h.except('id').dup)
@@ -147,6 +164,8 @@ module Solipsist
         _implicit_mass_create_action(models, options)
       end
 
+      # @param [Object] model
+      # @param [Hash] options
       def _implicit_render(model, options)
         base_options = { json: model, include: params[:include] || '*' }
         base_options[:fields] = parse_fields(params[:fields].to_unsafe_h) if params.key?(:fields)
@@ -154,6 +173,7 @@ module Solipsist
         render(base_options.merge(options))
       end
 
+      # @param [Hash<String, String>] fields
       def parse_fields(fields)
         fields.map { |key, value| [key.camelcase(:lower).to_sym, value.split(',').map!(&:underscore)] }.to_h
       end

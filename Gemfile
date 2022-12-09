@@ -2,6 +2,6 @@ source "https://rubygems.org"
 gemspec
 
 gem 'solargraph'
-gem 'typeprof'
+gem 'yard'
 gem 'sqlite3'
 gem 'rails'

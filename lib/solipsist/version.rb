@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Solipsist
-  VERSION = '0.0.0-dev'
+  VERSION = '0.0.1'
 end

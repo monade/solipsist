@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support'
 
 module Solipsist
@@ -21,21 +23,29 @@ end
 
 module ActionDispatch::Routing
   class Mapper
+    # @param [Symbol] name
+    # @param [Hash] options
+    # @param [Proc] block
     def api_resources(name, options = { only: [:index, :destroy, :update, :create, :show] }, &block)
       resources name, options, &block
     end
 
-    def api_resource(name, options = { only: [:index, :destroy, :update, :create, :show] })
+    # @param [Symbol] name
+    # @param [Hash] options
+    def api_resource(name, options = { only: [:index, :destroy, :update, :create, :show] }, &block)
       resource name, options, &block
     end
 
+    # @param [Symbol] name
+    # @param [Hash] options
+    # @param [Proc] block
     def api_mass_resources(name, options = { only: [:index, :destroy, :update, :create, :show] }, &block)
       resources name, options do
         collection do
           put '', action: :update
           delete '', action: :destroy
         end
-        block.call if block
+        block&.call
       end
     end
   end
