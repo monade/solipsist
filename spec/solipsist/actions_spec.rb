@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
+# rubocop:disable Metrics/BlockLength
 describe PeopleController, type: :controller do
   let(:json_body) { JSON.parse(response.body) }
 
@@ -22,12 +25,32 @@ describe PeopleController, type: :controller do
   end
 
   context 'POST /people' do
+    it 'default http status is 201' do
+      post :create, params: { name: 'aaaaaaa' }
+      expect(response).to have_http_status(:created)
+    end
+
     it 'creates an item' do
       expect do
         post :create, params: { name: 'aaaaaaa' }
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:created)
         expect(json_body.dig('data', 'id')).to be_a(String)
       end.to change { Person.count }.by(1)
+    end
+
+    context 'custom status' do
+      before do
+        class PeopleController < ApplicationController
+          def create
+            default! @person, { status: :ok }
+          end
+        end
+      end
+
+      it 'can use custom status' do
+        post :create, params: { name: 'aaaaaaa' }
+        expect(response).to have_http_status(:ok)
+      end
     end
   end
 
@@ -54,3 +77,4 @@ describe PeopleController, type: :controller do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

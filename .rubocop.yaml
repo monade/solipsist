@@ -1,0 +1,16 @@
+require:
+  - rubocop-rails
+
+Rails/SaveBang:
+  Enabled: true
+  Severity: error
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Style/Documentation:
+  Enabled: false

@@ -57,7 +57,8 @@ module Solipsist
     # @param [Hash] options
     def _implicit_create_action(model, options)
       model.save!
-      block_given? ? yield : _implicit_render(model, options)
+      merged_options = options.include?(:status) ? options : options.merge(status: :created)
+      block_given? ? yield : _implicit_render(model, merged_options)
     end
 
     # @param [Object] model
