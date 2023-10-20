@@ -33,7 +33,7 @@ module Solipsist
       when 'create'
         _implicit_create_action(model, options, &block)
       when 'index', 'show'
-        render_default!(model, options = {}, &block)
+        render_default!(model, options, &block)
       else
         raise "No implicit action for #{params[:action]}"
       end
