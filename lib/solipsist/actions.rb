@@ -33,7 +33,7 @@ module Solipsist
       when 'create'
         _implicit_create_action(model, options, &block)
       when 'index', 'show'
-        render_default!(model, options = {}, &block)
+        render_default!(model, options, &block)
       else
         raise "No implicit action for #{params[:action]}"
       end
@@ -57,7 +57,8 @@ module Solipsist
     # @param [Hash] options
     def _implicit_create_action(model, options)
       model.save!
-      block_given? ? yield : _implicit_render(model, options)
+      merged_options = options.include?(:status) ? options : options.merge(status: :created)
+      block_given? ? yield : _implicit_render(model, merged_options)
     end
 
     # @param [Object] model

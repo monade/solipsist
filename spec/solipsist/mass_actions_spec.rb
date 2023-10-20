@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
+# rubocop:disable Metrics/BlockLength
 describe ArticlesController, type: :controller do
   let(:json_body) { JSON.parse(response.body) }
 
@@ -25,7 +28,7 @@ describe ArticlesController, type: :controller do
     it 'creates an item' do
       expect do
         post :create, params: { title: 'aaaaaaa' }
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:created)
         expect(json_body.dig('data', 'id')).to be_a(String)
       end.to change { Article.count }.by(1)
     end
@@ -39,6 +42,21 @@ describe ArticlesController, type: :controller do
         expect(json_body.dig('data', 0, 'attributes', 'title')).to eq('aaaaaaa')
         expect(json_body.dig('data', 1, 'attributes', 'title')).to eq('123123')
       end.to change { Article.count }.by(2)
+    end
+
+    context 'custom status' do
+      before do
+        class ArticlesController < ApplicationController
+          def create
+            default! @article, { status: :ok }
+          end
+        end
+      end
+
+      it 'can use custom status' do
+        post :create, params: { title: 'aaaaaaa' }
+        expect(response).to have_http_status(:ok)
+      end
     end
   end
 
@@ -83,3 +101,4 @@ describe ArticlesController, type: :controller do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
