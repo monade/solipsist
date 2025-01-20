@@ -1,8 +1,7 @@
 source "https://rubygems.org"
 gemspec
 
-gem 'solargraph'
 gem 'yard'
 gem 'sqlite3'
-gem 'rails'
+gem 'rails', ENV['CI_RAILS_VERSION'] || '>= 0.0'
 gem 'rubocop-rails', require: false
