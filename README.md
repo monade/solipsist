@@ -8,13 +8,17 @@ Less code to write, more fun!
 
 ## Installation
 
+```ruby
+gem 'solipsist', github: 'monade/solipsist'
+```
+
+### Choose your serializer
+
 **Note:** This project uses a fork of the original [jsonapi-serializer](https://github.com/jsonapi-serializer/jsonapi-serializer) gem, maintained at [monade/jsonapi-serializer](https://github.com/monade/jsonapi-serializer). This fork is not currently published on RubyGems. To use it, you must point to the GitHub repository in your Gemfile:
 
 ```ruby
 gem 'jsonapi-serializer', git: 'https://github.com/monade/jsonapi-serializer.git', branch: 'master'
 ```
-
-### Choose your serializer
 
 **Controller experience stays the same!**
 
@@ -48,7 +52,7 @@ Solipsist will automatically use this serializer when `Solipsist.serializer = :j
 Solipsist supports both [ActiveModel::Serializers (AMS)](https://github.com/rails-api/active_model_serializers) and [jsonapi-serializer](https://github.com/jsonapi-serializer/jsonapi-serializer).
 By default, AMS is used, but you can switch to jsonapi-serializer in two ways:
 
-**1. Via initializer:**
+By default, AMS is used, but you can switch to jsonapi-serializer via an initializer:
 
 Create a file at `config/initializers/solipsist.rb` with:
 
@@ -56,13 +60,7 @@ Create a file at `config/initializers/solipsist.rb` with:
 Solipsist.serializer = :jsonapi # or :ams
 ```
 
-**2. Via environment variable:**
-
-```sh
-SOLIPSIST_SERIALIZER=jsonapi # or ams
-```
-
-If neither is set, AMS will be used by default.
+If not set, AMS will be used by default.
 
 ## FAQ
 

@@ -2,6 +2,12 @@
 
 require_relative 'base_strategy'
 
+begin
+  require 'jsonapi/serializer'
+rescue LoadError
+  raise LoadError, "jsonapi-serializer gem is required for JSONAPI strategy. Please add it to your development dependencies."
+end
+
 module Solipsist
   module SerializationStrategies
     class JsonapiStrategy < BaseStrategy

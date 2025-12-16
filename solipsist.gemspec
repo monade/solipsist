@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.add_dependency 'cancancan'
   s.add_dependency 'activesupport', ['>= 6', '< 9']
-  s.add_dependency 'active_model_serializers', '~> 0.10'
+  s.add_development_dependency 'active_model_serializers', '~> 0.10'
   s.add_development_dependency 'jsonapi-serializer', '~> 2.2'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'rubocop'

@@ -1,6 +1,13 @@
+
 # frozen_string_literal: true
 
 require_relative 'base_strategy'
+
+begin
+  require 'active_model_serializers'
+rescue LoadError
+  raise LoadError, "active_model_serializers gem is required for AMS strategy. Please add it to your development dependencies."
+end
 
 module Solipsist
   module SerializationStrategies

@@ -9,11 +9,9 @@ module Solipsist
     attr_accessor :serializer
   end
 
-  # Set serializer from initializer if present, otherwise fallback to ENV or default
+  # Set serializer from initializer if present, otherwise default to :ams
   def self.effective_serializer
-    return @serializer if @serializer
-    env = ENV['SOLIPSIST_SERIALIZER']&.to_sym
-    env == :jsonapi ? :jsonapi : :ams
+    @serializer || :ams
   end
 
   extend ActiveSupport::Autoload
