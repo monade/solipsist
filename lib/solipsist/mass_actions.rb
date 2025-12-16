@@ -167,10 +167,9 @@ module Solipsist
       # @param [Object] model
       # @param [Hash] options
       def _implicit_render(model, options)
-        base_options = { json: model, include: params[:include] || '*' }
-        base_options[:fields] = parse_fields(params[:fields].to_unsafe_h) if params.key?(:fields)
-
-        render(base_options.merge(options))
+        render(Solipsist::SerializationAdapter.render_args(model, options, params: params) do |fields|
+          parse_fields(fields)
+        end)
       end
 
       # @param [Hash<String, String>] fields
