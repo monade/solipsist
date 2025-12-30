@@ -7,11 +7,23 @@ module Solipsist
 
   class << self
     attr_accessor :serializer
+    attr_accessor :ams_serializers_namespace
+    attr_accessor :jsonapi_serializers_namespace
   end
 
   # Set serializer from initializer if present, otherwise default to :ams
   def self.effective_serializer
     @serializer || :ams
+  end
+
+  # Set AMS serializers namespace from initializer if present, otherwise default to Object
+  def self.effective_ams_namespace
+    @ams_serializers_namespace || Object
+  end
+
+  # Set JSONAPI serializers namespace from initializer if present, otherwise default to JSONAPI
+  def self.effective_jsonapi_namespace
+    @jsonapi_serializers_namespace || JSONAPI
   end
 
   extend ActiveSupport::Autoload

@@ -12,10 +12,11 @@ module Solipsist
   module SerializationStrategies
     class JsonapiStrategy < BaseStrategy
       def self.render_args(model, options = {}, params = {})
-        _validate_serializer_exists!(model, ::JSONAPI)
+        namespace = Solipsist.effective_jsonapi_namespace
+        _validate_serializer_exists!(model, namespace)
 
         klass = _extract_model_class(model)
-        serializer_class = options[:serializer] || ::JSONAPI.const_get("#{klass.name}Serializer")
+        serializer_class = options[:serializer] || namespace.const_get("#{klass.name}Serializer")
 
         include_param = normalize_include_param(options[:include] || params[:include])
 

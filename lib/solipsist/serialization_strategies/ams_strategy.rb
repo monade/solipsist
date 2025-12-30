@@ -13,7 +13,7 @@ module Solipsist
   module SerializationStrategies
     class AmsStrategy < BaseStrategy
       def self.render_args(model, options = {}, params = {}, &fields_parser)
-        _validate_serializer_exists!(model, ::AMS)
+        _validate_serializer_exists!(model, Solipsist.effective_ams_namespace)
 
         base_options = {
           json: model,
