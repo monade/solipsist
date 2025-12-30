@@ -62,6 +62,61 @@ Solipsist.serializer = :jsonapi # or :ams
 
 If not set, AMS will be used by default.
 
+### Serializer Namespace Configuration
+
+By default, Solipsist looks for serializers in the following namespaces:
+- **AMS**: `Object` (global namespace) - finds serializers like `PersonSerializer`, `EmployeeSerializer`
+- **JSONAPI**: `JSONAPI` namespace - finds serializers like `JSONAPI::PersonSerializer`
+
+You can customize where Solipsist looks for your serializers by configuring the namespace in `config/initializers/solipsist.rb`:
+
+```ruby
+# Configure namespace for AMS serializers (default: Object - global namespace)
+Solipsist.ams_serializers_namespace = Object  # or any custom module like MyApp::Serializers
+
+# Configure namespace for JSONAPI serializers (default: JSONAPI)
+Solipsist.jsonapi_serializers_namespace = JSONAPI  # or any custom module
+```
+
+#### Examples
+
+**Using global namespace for AMS (default):**
+```ruby
+# app/serializers/person_serializer.rb
+class PersonSerializer < ActiveModel::Serializer
+  attributes :name, :email
+end
+```
+
+**Using custom namespace for AMS:**
+```ruby
+# config/initializers/solipsist.rb
+Solipsist.ams_serializers_namespace = AMS
+
+# app/serializers/ams/person_serializer.rb
+module AMS
+  class PersonSerializer < ActiveModel::Serializer
+    attributes :name, :email
+  end
+end
+```
+
+**Using custom namespace for JSONAPI:**
+```ruby
+# config/initializers/solipsist.rb
+Solipsist.jsonapi_serializers_namespace = MyApp::Serializers
+
+# app/serializers/my_app/serializers/person_serializer.rb
+module MyApp
+  module Serializers
+    class PersonSerializer
+      include JSONAPI::Serializer
+      attributes :name, :email
+    end
+  end
+end
+```
+
 ## FAQ
 
 ### Do I need to change anything in my controllers?
