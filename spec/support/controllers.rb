@@ -43,6 +43,19 @@ class PeopleController < ApplicationController
   end
 end
 
+class PeopleWithCustomSerializerController < ApplicationController
+  def show
+    @person = Person.find(params[:id])
+
+    serializer = case Solipsist.serializer
+                 when :jsonapi then JSONAPI::CustomPersonSerializer
+                 else AMS::CustomPersonSerializer
+                 end
+
+    render_default! @person, serializer: serializer
+  end
+end
+
 class ArticlesController < ApplicationController
   accept_mass_actions
   load_and_authorize_resource
@@ -118,4 +131,5 @@ Rails.application.initialize!
 Rails.application.routes.draw do
   api_resources :people
   api_mass_resources :articles
+  api_resources :people_with_custom_serializer, only: [:show]
 end

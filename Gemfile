@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 gemspec
+gem 'jsonapi-serializer', git: 'https://github.com/monade/jsonapi-serializer.git', branch: 'master'
 
 rails_version = ENV['CI_RAILS_VERSION'] || '>= 0.0'
 

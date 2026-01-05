@@ -77,4 +77,23 @@ describe PeopleController, type: :controller do
     end
   end
 end
+
+describe PeopleWithCustomSerializerController, type: :controller do
+  let(:json_body) { JSON.parse(response.body) }
+  let(:person) { Person.first }
+
+  context 'custom serializer' do
+    it 'uses the custom serializer' do
+      get :show, params: { id: person.id }
+      expect(response).to have_http_status(:ok)
+      expect(json_body.dig('data', 'attributes', 'customField')).to eq('i_am_custom')
+    end
+
+    it 'includes standard attributes from custom serializer' do
+      get :show, params: { id: person.id }
+      expect(json_body.dig('data', 'attributes', 'name')).to eq(person.name)
+      expect(json_body.dig('data', 'attributes', 'email')).to eq(person.email)
+    end
+  end
+end
 # rubocop:enable Metrics/BlockLength
