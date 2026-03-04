@@ -4,7 +4,9 @@ module Solipsist
   module SerializationStrategies
     class BaseStrategy
       class << self
-        def _validate_serializer_exists!(model, namespace)
+        def _validate_serializer_exists!(model, namespace, options)
+          return if options[:serializer]
+
           klass = _extract_model_class(model)
           return unless klass
 

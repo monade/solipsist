@@ -24,4 +24,16 @@ module JSONAPI
       'i_am_custom'
     end
   end
+
+  class CustomUserSerializer
+    include JSONAPI::Serializer
+    set_key_transform :camel_lower
+    set_type :user
+
+    attributes :email
+
+    attribute :custom_user_field do |_user|
+      'i_am_a_custom_user'
+    end
+  end
 end

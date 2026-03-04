@@ -81,6 +81,7 @@ end
 describe PeopleWithCustomSerializerController, type: :controller do
   let(:json_body) { JSON.parse(response.body) }
   let(:person) { Person.first }
+  let(:user) { User.first }
 
   context 'custom serializer' do
     it 'uses the custom serializer' do
@@ -93,6 +94,11 @@ describe PeopleWithCustomSerializerController, type: :controller do
       get :show, params: { id: person.id }
       expect(json_body.dig('data', 'attributes', 'name')).to eq(person.name)
       expect(json_body.dig('data', 'attributes', 'email')).to eq(person.email)
+    end
+
+    it 'includes works when the default serializer is not set' do
+      get :user, params: { id: user.id }
+      expect(json_body.dig('data', 'attributes', 'email')).to eq(user.email)
     end
   end
 end

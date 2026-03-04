@@ -47,12 +47,13 @@ class PeopleWithCustomSerializerController < ApplicationController
   def show
     @person = Person.find(params[:id])
 
-    serializer = case Solipsist.serializer
-                 when :jsonapi then JSONAPI::CustomPersonSerializer
-                 else AMS::CustomPersonSerializer
-                 end
+    render_default! @person, serializer: CustomPersonSerializer
+  end
 
-    render_default! @person, serializer: serializer
+  def user
+    @user = User.find(params[:id])
+
+    render_default! @user, serializer: CustomUserSerializer
   end
 end
 
@@ -131,5 +132,7 @@ Rails.application.initialize!
 Rails.application.routes.draw do
   api_resources :people
   api_mass_resources :articles
-  api_resources :people_with_custom_serializer, only: [:show]
+  api_resources :people_with_custom_serializer, only: [:show] do
+    get :user, on: :member
+  end
 end

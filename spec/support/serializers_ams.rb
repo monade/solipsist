@@ -16,4 +16,12 @@ module AMS
       'i_am_custom'
     end
   end
+
+  class CustomUserSerializer < ActiveModel::Serializer
+    attributes :email, :custom_user_field
+
+    def custom_user_field
+      'i_am_a_custom_user'
+    end
+  end
 end

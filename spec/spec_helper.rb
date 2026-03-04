@@ -31,11 +31,15 @@ SERIALIZER_BACKEND = Solipsist.serializer
 if SERIALIZER_BACKEND == :jsonapi
   PersonSerializer = JSONAPI::PersonSerializer
   ArticleSerializer = JSONAPI::ArticleSerializer
+  CustomPersonSerializer = JSONAPI::CustomPersonSerializer
+  CustomUserSerializer = JSONAPI::CustomUserSerializer
 else
   ActiveModelSerializers.config.adapter = ActiveModelSerializers::Adapter::JsonApi
   ActiveModel::Serializer.config.key_transform = :camel_lower
   PersonSerializer = AMS::PersonSerializer
   ArticleSerializer = AMS::ArticleSerializer
+  CustomPersonSerializer = AMS::CustomPersonSerializer
+  CustomUserSerializer = AMS::CustomUserSerializer
 end
 
 RSpec.configure do |config|
