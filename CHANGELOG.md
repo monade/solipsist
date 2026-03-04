@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project made by Monade Team are documented in this file. For info refer to team@monade.io
 
+## [0.2.1]
+### Fixed
+- Couldn't set custom serializer when the default one was not set
+
 ## [0.2.0]
 ### Added
 - Opt-in support for [jsonapi-serializer] (see README for setup instructions)
