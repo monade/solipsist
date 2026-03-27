@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project made by Monade Team are documented in this file. For info refer to team@monade.io
 
+## [0.2.2]
+### Fixed
+- `meta:` option passed to `render_default!` / `default!` was silently dropped from the JSON:API response body
+
 ## [0.2.1]
 ### Fixed
 - Couldn't set custom serializer when the default one was not set
