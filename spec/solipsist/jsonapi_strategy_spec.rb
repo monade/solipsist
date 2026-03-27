@@ -13,10 +13,12 @@ describe Solipsist::SerializationStrategies::JsonapiStrategy do
         expect(result[:json][:meta]).to eq({ total: 1 })
         expect(result).not_to have_key(:meta)
       end
+    end
 
-      it 'does not pass meta as a rails render option' do
-        result = described_class.render_args(person, { meta: { total: 1 } }, ActionController::Parameters.new({}))
-        expect(result.keys).to contain_exactly(:json)
+    context 'without meta option' do
+      it 'does not include a meta key in the json output' do
+        result = described_class.render_args(person, {}, ActionController::Parameters.new({}))
+        expect(result[:json]).not_to have_key(:meta)
       end
     end
   end
