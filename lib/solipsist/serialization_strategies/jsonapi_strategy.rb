@@ -20,8 +20,10 @@ module Solipsist
 
         include_param = normalize_include_param(options[:include] || params[:include])
 
-        json = serializer_class.new(model, include: include_param).serializable_hash
-        clean_options = options.except(:serializer)
+        serializer_opts = { include: include_param }
+        serializer_opts[:meta] = options[:meta] if options.key?(:meta)
+        json = serializer_class.new(model, **serializer_opts).serializable_hash
+        clean_options = options.except(:serializer, :meta)
         { json: json }.merge(clean_options)
       end
 
